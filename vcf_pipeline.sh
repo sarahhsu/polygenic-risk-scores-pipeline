@@ -57,7 +57,7 @@ if [ ! -f $PROJECT_FOLDER/snps.txt ]; then
     awk 'FNR==1 && NR!=1{next;}{print}' $SCORE_PATH/*.csv > $PROJECT_FOLDER/temp_snps.txt
     echo "$(tail -n +2 $PROJECT_FOLDER/temp_snps.txt)" > $PROJECT_FOLDER/temp_snps.txt
     cat $PROJECT_FOLDER/temp_snps.txt | tr "," "\\t" > $PROJECT_FOLDER/snps.txt
-    mv snps.txt $PROJECT_FOLDER/temp_snps.txt
+    mv $PROJECAT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
     cut -f 1-4 $PROJECT_FOLDER/temp_snps.txt > $PROJECT_FOLDER/snps.txt
     mv $PROJECT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
     sort $PROJECT_FOLDER/temp_snps.txt | uniq -u > $PROJECT_FOLDER/snps.txt
