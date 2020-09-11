@@ -12,7 +12,7 @@ use .bcftools-1.9
 use R-3.5
 
 
-SCRIPT_PATH=/humgen/diabetes2/users/shsu/prs_project
+SCRIPT_PATH=/humgen/diabetes2/users/shsu/prs_project/polygenic-risk-scores-pipeline
 PROJECT_PATH=/humgen/diabetes2/users/shsu/prs_project
 CLUSTER_PATH=/humgen/diabetes2/users/shsu/prs_project/score_info
 VCF_PATH=/humgen/diabetes2/users/shsu/prs_project/vcf_file.vcf.gz
