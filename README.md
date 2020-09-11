@@ -16,7 +16,7 @@ Updated September 11, 2020
         git clone https://github.com/sarahhsu/polygenic-risk-scores-pipeline.git
         ```
         
-    2. Make sure all files are present in the folder polygenic-risk-scores-pipeline (check FILES section below for list of files).
+    2. Make sure all files are present in the *polygenic-risk-scores-pipeline* folder (check FILES section below for list of files).
 
     3. Create a copy of the prs_pipeline_submission.sh script in your project folder, rename to prs_pipeline_submission_{username}_{date}.sh and modify parameters.
 
@@ -24,11 +24,11 @@ Updated September 11, 2020
 
 ## FOR HELP:
 
-  To print help message, run *./prs_pipeline.sh -h* in your scripts folder.
+  To print help message, run *./prs_pipeline.sh -h* in the *polygenic-risk-scores-pipeline* folder.
 
 ## FILES:
   
-  * Files included:
+  * Files included in *polygenic-risk-scores-pipeline*:
     * prs_pipeline_submission.sh - calls the pipeline (needs modification to be able to use on your server)
     * prs_pipeline.sh - main wrapper for all scripts
     * vcf_pipeline.sh - extracts the vcf file based on variants
@@ -41,7 +41,7 @@ Updated September 11, 2020
 
  --------------------------------------------------------------------------------------------------------------------------------------
  
-### *Usage: source prs_pipeline.sh -s </path/to/script/files> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>*
+### *Usage: source prs_pipeline.sh -s </path/to/scripts/polygenic-risk-scores-pipeline> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>*
 
 ### Recognized optional command line arguments:
     -n  -- Add project name to the output files (no spaces)
