@@ -16,7 +16,7 @@ Updated September 11, 2020
         git clone https://github.com/sarahhsu/polygenic-risk-scores-pipeline.git
         ```
         
-    2. Make sure all files are present (check FILES section below for list of files).
+    2. Make sure all files are present in the folder polygenic-risk-scores-pipeline (check FILES section below for list of files).
 
     3. Create a copy of the prs_pipeline_submission.sh script, rename to prs_pipeline_submission_{username}_{date}.sh and modify parameters.
 
@@ -61,7 +61,7 @@ Updated September 11, 2020
 
 * -n option is for when you want to add your project name to your output file folder and score files (DO NOT INCLUDE ANY SPACES, ie. polygenic_scores)
 
-* -v option is if you don't want to generate scores, and you just want to exctract a VCF file with all of your listed variants. You must include your variants in a file /path/to/project/files/txt_files/snps.txt
+* -v option is if you don't want to generate scores, and you just want to exctract a VCF file with all of your listed variants. You must include your variants in a file /path/to/project/files/snps.txt
   * snps.txt is tab delimited: chr <tab> pos <tab> ref <tab> alt 
   * ie. 3 <tab> 137844645 <tab> T <tab> C
   
