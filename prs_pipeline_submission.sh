@@ -2,7 +2,7 @@
 
 # Make sure you have bcftools and R modules loaded!
 
-SCRIPT_PATH=/humgen/diabetes2/users/shsu/prs_project
+SCRIPT_PATH=/humgen/diabetes2/users/shsu/prs_project/polygenic-risk-scores-pipeline
 PROJECT_PATH=/humgen/diabetes2/users/shsu/prs_project
 CLUSTER_PATH=/humgen/diabetes2/users/shsu/prs_project/score_info
 VCF_PATH=/humgen/diabetes2/users/shsu/prs_project/vcf_file.vcf.gz
