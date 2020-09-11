@@ -11,8 +11,8 @@ Updated September 11, 2020
     1. Clone the gitlab repository by typing these commands after logging into your server:
     
         ```
-        mkdir *prs_scripts_folder*
-        cd *prs_scripts_folder*
+        mkdir your_prs_scripts_folder
+        cd your_prs_scripts_folder
         git clone https://gitlab.partners.org/so454/polygenic-risk-scores_pipeline.git
         ```
         
