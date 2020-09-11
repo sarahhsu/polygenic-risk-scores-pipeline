@@ -33,11 +33,8 @@ Updated September 11, 2020
     * prs_pipeline.sh - main wrapper for all scripts
     * vcf_pipeline.sh - extracts the vcf file based on variants
     * prs.R - calulates the PRS
+    * example/snps.txt - variants, one per line separated by tabs, chr <tab> pos <tab> ref <tab> alt (ex. 3 <tab> 137844645 <tab> T <tab> C)
     * example/prs_pipeline_submission_shsu_2020_05_21.sh: example of a submission file for Broad server
-    * 
-    * example/txt_files:
-      * snps.txt - variants, one per line separated by tabs, chr <tab> pos <tab> ref <tab> alt (ex. 3 <tab> 137844645 <tab> T <tab> C)
-      
     * example/score_info:
       * cluster1.csv - examples of what the risk score information csv should look like, with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight.
       
@@ -58,16 +55,16 @@ Updated September 11, 2020
 
 * Make sure you are using **FULL ABSOLUTE PATHS**! 
 
-* All project files should be in /path/to/project/files including a folder called txt_files that has snps.txt 
-  * snps.txt is tab delimited: chr <tab> pos <tab> ref <tab> alt 
-  * ie. 3 <tab> 137844645 <tab> T <tab> C
+* All project files should be in /path/to/project/files. 
   
 * All files to generate scores should be in /path/to/score/files with each score in a separate csv file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight.
 
 * -n option is for when you want to add your project name to your output file folder and score files (DO NOT INCLUDE ANY SPACES, ie. polygenic_scores)
 
-* -v option is if you don't want to generate scores, and you just want to exctract a VCF file with all of your listed variants (snps.txt).
-
+* -v option is if you don't want to generate scores, and you just want to exctract a VCF file with all of your listed variants. You must include your variants in a file /path/to/project/files/txt_files/snps.txt
+  * snps.txt is tab delimited: chr <tab> pos <tab> ref <tab> alt 
+  * ie. 3 <tab> 137844645 <tab> T <tab> C
+  
  --------------------------------------------------------------------------------------------------------------------------------------
 
 
