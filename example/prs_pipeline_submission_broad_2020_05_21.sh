@@ -14,7 +14,7 @@ use R-3.5
 SCRIPT_PATH=/humgen/diabetes2/users/shsu/prs_project
 PROJECT_PATH=/humgen/diabetes2/users/shsu/prs_project
 CLUSTER_PATH=/humgen/diabetes2/users/shsu/prs_project/score_info
-VCF_PATH=/humgen/diabetes2/users/shsu/prs_project/vcfexample.vcf.gz
+VCF_PATH=/humgen/diabetes2/users/josep/PartnersBIOBANK/merge_all_35K_datasets/merge_35K_genotypes/EU/imputation_HRC_EU
 PROJECT_NAME=project_name
 
 source $SCRIPT_PATH/prs_pipeline.sh -s $SCRIPT_PATH -p $PROJECT_PATH -c $CLUSTER_PATH -v $VCF_PATH -n $PROJECT_NAME
