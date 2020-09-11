@@ -13,7 +13,7 @@ Updated September 11, 2020
         ```
         mkdir your_prs_scripts_folder
         cd your_prs_scripts_folder
-        git clone https://gitlab.partners.org/so454/polygenic-risk-scores_pipeline.git
+        git clone https://gitlab.partners.org/so454/polygenic-risk-scores-pipeline.git
         ```
         
     2. Make sure all files are present (check FILES section below for list of files).
