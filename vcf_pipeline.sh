@@ -31,7 +31,7 @@ do
       shift # Remove argument value from processing
       ;;
       -v|--vcf)
-      SCORE_PATH=$2
+      VCF_ONLY=$2
       shift # Remove argument name from processing
       shift # Remove argument value from processing
       ;;
