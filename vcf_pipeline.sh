@@ -56,7 +56,7 @@ if [ ! -f $PROJECT_FOLDER/snps.txt ]; then
     echo "$PROJECT_FOLDER/snps.txt not found! Creating from score files."
     awk 'FNR==1 && NR!=1{next;}{print}' $SCORE_PATH/*.csv > $PROJECT_FOLDER/temp_snps.txt
     echo "$(tail -n +2 $PROJECT_FOLDER/temp_snps.txt)" > $PROJECT_FOLDER/temp_snps.txt
-    cat $PROJECT_FOLDER/temp_snps.txt | tr "," "\\t" > snps.txt
+    cat $PROJECT_FOLDER/temp_snps.txt | tr "," "\\t" > $PROJECT_FOLDER/snps.txt
     mv snps.txt $PROJECT_FOLDER/temp_snps.txt
     cut -f 1-4 $PROJECT_FOLDER/temp_snps.txt > $PROJECT_FOLDER/snps.txt
     mv $PROJECT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
