@@ -67,7 +67,7 @@ fi
 mkdir $FINAL_VCF_FOLDER
 cd $FINAL_VCF_FOLDER
 filename=$(basename $VCF_PATH .vcf.gz)
-bcftools view -O v -R $PROJECT_FOLDER/snps.txt $VCF_PATH  | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT' 
+bcftools view -O v -R $PROJECT_FOLDER/snps.txt $VCF_PATH  | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
 
 
 echo
