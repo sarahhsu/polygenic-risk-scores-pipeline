@@ -71,6 +71,7 @@ bcftools view -O v -R $PROJECT_FOLDER/snps.txt $VCF_PATH  | bcftools annotate --
 
 
 echo
+mkdir $RESULTS_FOLDER
 zgrep -v "^##" $FINAL_VCF_FOLDER/${filename}_snps_${USER}_${DATE}.recode.vcf.gz | cut -f1-5 > $RESULTS_FOLDER/${PROJECT}extracted_snps_${USER}_${DATE}.txt
 COUNT=$(wc -l $RESULTS_FOLDER/${PROJECT}extracted_snps_${USER}_${DATE}.txt)
 echo "SNPs successfully extracted located at $RESULTS_FOLDER/${PROJECT}extracted_snps_${USER}_${DATE}.txt ."
