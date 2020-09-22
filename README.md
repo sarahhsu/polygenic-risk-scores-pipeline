@@ -20,7 +20,7 @@ Updated September 11, 2020
 
     3. Create a copy of the prs_pipeline_submission.sh script in your project folder, rename to prs_pipeline_submission_{username}_{date}.sh and modify parameters.
 
-    4. Submit prs_pipeline_submission.sh to your job scheduler.
+    4. Submit prs_pipeline_submission_{username}_{date}.sh to your job scheduler.
 
 ## FOR HELP:
 
