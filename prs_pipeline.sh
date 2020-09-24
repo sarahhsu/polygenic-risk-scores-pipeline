@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Updated September 11 2020 - Sarah Hsu
+#Updated September 24 2020 - Sarah Hsu
 START_TIME=`date +%s`
 # Default values of arguments
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
