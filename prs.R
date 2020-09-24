@@ -1,12 +1,12 @@
 #!/usr/bin/env Rscript
 library(vcfR)
-#Updated September 11 2020 - Sarah Hsu
+#Updated September 24 2020 - Sarah Hsu
 
 # Input and Output Description --------------------------------------------------------
 
 #Input files:
-### 1. GZIPPED VCF with extracted SNPs and individuals
-### 2. Score info files
+### 1. GZIPPED VCF with extracted SNPs
+### 2. Polygenic risk score info file(s)
 
 #Output files:
 ### 1. scores_stats.csv: UNSCALED scores for each person with mean, max, min, stdev added as rows at the bottom
@@ -20,8 +20,8 @@ args = commandArgs(trailingOnly=TRUE)
 #Add main path where files are located and will save to
 project_path <- args[1]
 #Add path where cluster CSV files
-cluster_path <- args[2]
-#Add name of gzipped vcf file path
+score_path <- args[2]
+#Add path to folder where the gzipped vcf file is
 vcf_file_path <- args[3]
 username <- args[4]
 cur_date <- args[5]
@@ -33,6 +33,7 @@ if(project_name == "project"){
 
 # Functions ---------------------------------------------------------------
 
+# Convert given dosage to 0, 1, 2 based on the effect allele.
 convert <- function(r, c, cur_snps, cluster, vcf_info){
   snp <- colnames(cur_snps)[c]
   ids <- paste(cluster$Chr, cluster$Pos, cluster$Ref, cluster$Alt, sep=":")
@@ -55,24 +56,24 @@ convert <- function(r, c, cur_snps, cluster, vcf_info){
 
 # Read in files -----------------------------------------------------------
 
-#GZIPPED VCFs with extracted SNPs and individuals
+# GZIPPED VCFs with extracted SNPs
 
 print("Reading in VCF files.")
 
-vcf_path <- paste0("_snps_", username, "_", cur_date, ".recode.vcf.gz$")
+vcf_path <- paste0("snps_", username, "_", cur_date, ".recode.vcf.gz$")
 vcf_file_names <- list.files(path=vcf_file_path, pattern=vcf_path, full.names = TRUE)
 
 
 vcf_names <- c()
-
 for (i in 1:length(vcf_file_names)) {
   name <- gsub(".vcf.gz", "", vcf_file_names[i])
   assign(name, read.vcfR(vcf_file_names[i]))
   vcf_names <- c(vcf_names, name)
 }
 
+
 print("Reading in score info files.")
-cluster_files <- list.files(path = cluster_path, pattern="*.csv")
+cluster_files <- list.files(path = score_path, pattern="*.csv")
 if (length(cluster_files) == 0){
   stop("No input score info files. Score info files must be specified in csv format with header
   Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight.")
@@ -82,7 +83,7 @@ cluster_names <- c()
 snps <- data.frame(matrix(, nrow = 0, ncol = 4))
 for (file in cluster_files){
   cluster_name <- gsub(".csv", "", file)
-  assign(cluster_name, read.csv(paste(cluster_path, file, sep="/"), 
+  assign(cluster_name, read.csv(paste(score_path, file, sep="/"), 
                                 colClasses = c("numeric", "numeric", "character", "character", "character", "character", "numeric"), 
                                 header=TRUE))
   cluster_names <- c(cluster_names, cluster_name)
@@ -92,12 +93,16 @@ for (file in cluster_files){
 
 
 # Filter out any unwanted SNPs --------------------------------------------
+
 idxs_to_remove <- c()
 for (i in 1:length(vcf_names)){
   assign("vcf_info", as.data.frame(getFIX(get(vcf_names[i]))))
   idx <- c()
   for (j in 1:nrow(vcf_info)){
-    if(length(which(vcf_info[j, "CHROM"] == snps[,1] & vcf_info[j, "POS"] == snps[,2] & vcf_info[j, "REF"] == snps[,3] & vcf_info[j,"ALT"] == snps[,4]))==0){
+    if(length(which(vcf_info[j, "CHROM"] == snps[,1] & 
+                    vcf_info[j, "POS"] == snps[,2] & 
+                    vcf_info[j, "REF"] == snps[,3] & 
+                    vcf_info[j,"ALT"] == snps[,4])) == 0){
       idx <- c(idx, j)
     }
   }
@@ -118,28 +123,23 @@ for (i in 1:length(vcf_names)){
     dosage_info <- dosage_info[-remove,]
     vcf_info <- vcf_info[-remove,]
   }
-  cur_weights <- data.frame(matrix(0, nrow = ncol(dosage_info), ncol = length(cluster_names) ))
-  rownames(cur_weights) <- colnames(dosage_info)
-  colnames(cur_weights) <- cluster_names
+  cur_weights <- data.frame(matrix(0, nrow = ncol(dosage_info), ncol = length(cluster_names)))
+  dimnames(cur_weights) <- list(colnames(dosage_info), cluster_names)
 
   ##Loop through cluster_names
   for (j in 1:length(cluster_names)){
     cluster <- get(cluster_names[j])
     cur_snps <- t(dosage_info[match(c(paste(cluster$Chr, cluster$Pos, cluster$Ref, cluster$Alt, sep = ":")), rownames(dosage_info)),])
-    cur_snps1 <- cur_snps
-    for (r in 1:nrow(cur_snps)){
-      for (c in 1:ncol(cur_snps)){
-        cur_snps1[r, c] <- convert(r, c, cur_snps, cluster, vcf_info)
-      }
-    }
+    cur_snps1 <- t(sapply(1:nrow(cur_snps),
+           function(r) t(sapply(1:ncol(cur_snps), convert, r=r, cur_snps=cur_snps, cluster=cluster, vcf_info=vcf_info))))
+    dimnames(cur_snps1) <- list(rownames(cur_snps), colnames(cur_snps))
     if (ncol(cur_snps1) == 1) {
       cur_weights[,j] <- apply(cur_snps1, 1,as.numeric)*as.vector(cluster$Weight)
     } else {
       cur_weights[,j] <- rowSums(t(apply(cur_snps1, 1,as.numeric)*as.vector(cluster$Weight)))
     }
   }
-
-  if (nrow(weights) < 1){
+  if (nrow(weights) == 0){
     weights <- cur_weights
   } else {
     weights <- rbind(weights, cur_weights)

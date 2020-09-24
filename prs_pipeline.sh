@@ -6,7 +6,8 @@ START_TIME=`date +%s`
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PROJECT_PATH=$SCRIPT_PATH
 SCORE_PATH=$SCRIPT_PATH
-VCF_PATH=$SCRIPT_PATH
+VCF_FILE_PATH="vcf"
+VCF_PATH="path"
 VCF_ONLY=0
 PROJECT_NAME=project
 SCRIPT=`basename ${BASH_SOURCE[0]}`
@@ -110,6 +111,11 @@ while [[ $# -gt 0 ]]
       shift # Remove argument value from processing
       ;;
       -f) #set option "f" specifying the vcf file name
+      VCF_FILE_PATH="$2"
+      shift # Remove argument name from processing
+      shift # Remove argument value from processing
+      ;;
+      -z) #set option "z" specifying the vcf folder name
       VCF_PATH="$2"
       shift # Remove argument name from processing
       shift # Remove argument value from processing
@@ -119,7 +125,7 @@ while [[ $# -gt 0 ]]
       shift # Remove argument name from processing
       shift # Remove argument value from processing
       ;;
-      -v) #set option "v" for vcf only
+      -v) #set option "v" for extract vcf only
       VCF_ONLY=1
       shift # Remove argument name from processing
       ;;
@@ -127,6 +133,12 @@ while [[ $# -gt 0 ]]
     esac
 done
 wait
+
+
+if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf" ]].; then
+  echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
+  exit 1
+fi
 
 if [ "$PROJECT_NAME" != "project" ]; then
   PROJECT_NAME="${PROJECT_NAME}_"
@@ -139,7 +151,7 @@ fi
 
 
 echo "Extracting variants from VCF file."
-source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -n $PROJECT_NAME -f $VCF_PATH -s $SCORE_PATH -v $VCF_ONLY || exit 1
+source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -n $PROJECT_NAME -f $VCF_FILE_PATH -z $VCF_PATH -s $SCORE_PATH -v $VCF_ONLY || exit 1
 echo "RUN TIME: $(expr `date +%s` - $START_TIME) seconds"
 if [ $VCF_ONLY -eq 1 ]; then
     echo "END TIME: $(date +"%T")"
