@@ -1,4 +1,4 @@
-# Polygenic Risk Score Calculation from a VCF File
+# Polygenic Risk Score Calculation from VCF Files
 Updated September 24, 2020
 
 **MAKE SURE ALL VARIANT COORDINATES AND REF/ALT ARE CORRECT IN YOUR SCORE FILES!**
