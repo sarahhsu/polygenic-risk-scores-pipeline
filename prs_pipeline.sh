@@ -135,7 +135,7 @@ done
 wait
 
 
-if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf" ]].; then
+if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf" ]]; then
   echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
   exit 1
 fi
