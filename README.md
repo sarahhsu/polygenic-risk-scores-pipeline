@@ -1,5 +1,5 @@
 # Polygenic Risk Score Calculation from a VCF File
-Updated September 11, 2020
+Updated September 24, 2020
 
 **MAKE SURE ALL VARIANT COORDINATES AND REF/ALT ARE CORRECT IN YOUR SCORE FILES!**
 
@@ -25,6 +25,24 @@ Updated September 11, 2020
 ## FOR HELP:
 
   To print help message, run *./prs_pipeline.sh -h* in the *polygenic-risk-scores-pipeline* folder.
+  
+--------------------------------------------------------------------------------------------------------------------------------------
+ 
+### *Usage: source prs_pipeline.sh -s </path/to/scripts/polygenic-risk-scores-pipeline> -p </path/to/project/files> -c </path/to/score/files> [options]*
+
+### Required command line arguments:
+    -s -- Path to where the scripts are (should be in the folder named polygenic-risk-scores-pipeline)
+    -p -- Path to the main project folder, where the results folders and files will be written to 
+    -c -- Path to scoring files, typically a subfolder within the project folder
+    -f -- Path to a gzipped VCF file (extension *.vcf.gz), either -f or -z must be used but not both
+    -z -- Path to a folder of gzipped VCF files, either -f or -z must be used but not both
+
+### Recognized optional command line arguments:
+    -n  -- Add project name to the output files (no spaces)
+    -v  -- Extract VCF file only, no PRS calculation
+    -h  -- Help message
+ 
+--------------------------------------------------------------------------------------------------------------------------------------
 
 ## FILES:
   
@@ -34,22 +52,19 @@ Updated September 11, 2020
     * vcf_pipeline.sh - extracts the vcf file based on variants
     * prs.R - calulates the PRS
     * example/snps.txt - variants, one per line separated by tabs, chr <tab> pos <tab> ref <tab> alt (ex. 3 <tab> 137844645 <tab> T <tab> C)
-    * example/prs_pipeline_submission_shsu_2020_05_21.sh: example of a submission file for Broad server
+    * example/prs_pipeline_submission_shsu_2020_09-11.sh - example of a submission file for Broad server
+    * example/prs_project_final_VCF_shsu_2020-09-11
+      * chr22.dose_snps_shsu_2020-09-11.recode.vcf.gz - example of final extracted VCF file
+    * example/prs_project_results_shsu_2020-09-11
+      * prs_project_extracted_snps_shsu_2020-09-11.txt - example of list of extracted SNPs
+      * prs_project_scores_shsu_2020-09-11.csv - example of scores table results (typically used for downstream analysis)
+      * prs_project_scaled_scores_shsu_2020-09-11.csv - example of scaled scores table results
+      * prs_project_scores_stats_shsu_2020-09-11.csv - example of scores table results with mean, std, max, min for each score
     * example/score_info:
-      * cluster1.csv - examples of what the risk score information csv should look like, with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight.
+      * score_file.csv - examples of what the risk score information csv should look like, with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight.
       
-
- --------------------------------------------------------------------------------------------------------------------------------------
- 
-### *Usage: source prs_pipeline.sh -s </path/to/scripts/polygenic-risk-scores-pipeline> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>*
-
-### Recognized optional command line arguments:
-    -n  -- Add project name to the output files (no spaces)
-    -v  -- Extract VCF file only, no PRS calculation
-    -h  -- Help message
- 
- --------------------------------------------------------------------------------------------------------------------------------------
 ## MORE DETAIL:
+
 * Dosages are used for score calculation.
 
 * All 3 scripts should be in /path/to/script/files including (1) prs_pipeline.sh, (2) vcf_pipeline.sh, (3) prs.R
