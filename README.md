@@ -1,10 +1,10 @@
 # Polygenic Risk Score Calculation from a VCF File
 Updated September 11, 2020
 
-**MAKE SURE ALL VARIANT COORDINATES AND REF/ALT ARE CORRECT IN YOUR SCORING FILES!**
+**MAKE SURE ALL VARIANT COORDINATES AND REF/ALT ARE CORRECT IN YOUR SCORE FILES!**
 
 
-## RUNNING THE SCRIPTS:
+## RUNNING THE PIPELINE:
 
   * To run pipeline:
   
@@ -20,7 +20,7 @@ Updated September 11, 2020
 
     3. Create a copy of the prs_pipeline_submission.sh script in your project folder, rename to prs_pipeline_submission_{username}_{date}.sh and modify parameters.
 
-    4. Submit prs_pipeline_submission.sh to your job scheduler.
+    4. Submit prs_pipeline_submission_{username}_{date}.sh to your job scheduler.
 
 ## FOR HELP:
 
