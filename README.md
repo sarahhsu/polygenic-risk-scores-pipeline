@@ -50,14 +50,15 @@ Updated September 11, 2020
  
  --------------------------------------------------------------------------------------------------------------------------------------
 ## MORE DETAIL:
+* Dosages are used for score calculation.
 
-* All 3 scripts should be in /path/to/script/files including (1) prs_pipeline.sh, (2) vcf_pipeline.sh, (3) prs.R.
+* All 3 scripts should be in /path/to/script/files including (1) prs_pipeline.sh, (2) vcf_pipeline.sh, (3) prs.R
 
 * Make sure you are using **FULL ABSOLUTE PATHS**! 
 
-* All project files should be in /path/to/project/files. 
+* All project files should be in /path/to/project/files
   
-* All files to generate scores should be in /path/to/score/files with each score in a separate csv file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight.
+* All files to generate scores should be in /path/to/score/files with each score in a separate csv file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight
 
 * -n option is for when you want to add your project name to your output file folder and score files (DO NOT INCLUDE ANY SPACES, ie. polygenic_scores)
 
