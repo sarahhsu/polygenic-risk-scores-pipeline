@@ -21,10 +21,6 @@ Updated September 24, 2020
     3. Create a copy of the prs_pipeline_submission.sh script in your project folder, rename to prs_pipeline_submission_{username}_{date}.sh and modify parameters.
 
     4. Submit prs_pipeline_submission_{username}_{date}.sh to your job scheduler.
-
-## FOR HELP:
-
-  To print help message, run *./prs_pipeline.sh -h* in the *polygenic-risk-scores-pipeline* folder.
   
 --------------------------------------------------------------------------------------------------------------------------------------
  
@@ -43,7 +39,10 @@ Updated September 24, 2020
     -h  -- Help message
  
 --------------------------------------------------------------------------------------------------------------------------------------
+## FOR HELP:
 
+  To print help message, run *./prs_pipeline.sh -h* in the *polygenic-risk-scores-pipeline* folder.
+  
 ## FILES:
   
   * Files included in *polygenic-risk-scores-pipeline*:
