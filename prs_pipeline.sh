@@ -71,7 +71,7 @@ help () {
   exit 1
 }
 
-echo "Polygenic Scores Pipeline: Updated September 11 2020"
+echo "Polygenic Scores Pipeline: Updated September 24 2020"
 echo "DATE: $DATE"
 echo "START TIME: $(date +"%T")"
 echo "Parsing command line arguments. Here is what your arguments were:"
