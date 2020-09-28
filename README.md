@@ -22,7 +22,7 @@ Updated September 24, 2020
 
     4. Submit prs_pipeline_submission_{username}_{date}.sh to your job scheduler.
     
-   * To update your version of the pipeline:
+  * To update your version of the pipeline:
    
     1. Go to your version of the *polygenic-risk-scores-pipeline* folder 
     
