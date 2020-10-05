@@ -39,7 +39,7 @@ Updated September 24, 2020
     -p -- Path to the main project folder, where the results folders and files will be written to 
     -c -- Path to scoring files, typically a subfolder within the project folder
     -f -- Path to a gzipped VCF file (extension *.vcf.gz), either -f or -z must be used but not both
-    -z -- Path to a folder of gzipped VCF files, either -f or -z must be used but not both
+    -z -- Path to a folder of gzipped VCF files (extension *.vcf.gz), either -f or -z must be used but not both
 
 ### Recognized optional command line arguments:
     -n  -- Add project name to the output files (no spaces)
