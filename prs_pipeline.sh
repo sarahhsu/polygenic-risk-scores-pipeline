@@ -81,7 +81,6 @@ for i; do
    echo $i
 done
 
-echo "$#"
 ### check number of command line arguments
 if [ "$#" -le 6 ]; then
   if [ "$1" == "-h" ]; then
