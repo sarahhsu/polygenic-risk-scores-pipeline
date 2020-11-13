@@ -81,8 +81,9 @@ for i; do
    echo $i
 done
 
+echo "$#"
 ### check number of command line arguments
-if [ $NUMARGS -le 6 ]; then
+if [ "$#" -le 6 ]; then
   if [ "$1" == "-h" ]; then
   help
   exit 1
