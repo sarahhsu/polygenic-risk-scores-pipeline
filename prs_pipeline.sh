@@ -80,7 +80,7 @@ echo "Parsing command line arguments. Here is what your arguments were:"
 for i; do
    echo $i
 done
-echo $NUMARGS
+
 ### check number of command line arguments
 if [ $NUMARGS -le 6 ]; then
   if [ "$1" == "-h" ]; then
