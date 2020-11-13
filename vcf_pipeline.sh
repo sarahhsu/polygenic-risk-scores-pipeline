@@ -15,7 +15,7 @@ do
       shift # Remove argument name from processing
       shift # Remove argument value from processing
       ;;
-      -n|--name)
+      -m|--name)
       PROJECT="$2"
       shift # Remove argument name from processing
       shift # Remove argument value from processing

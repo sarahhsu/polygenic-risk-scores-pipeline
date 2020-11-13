@@ -24,7 +24,7 @@ usage () {
   echo "Usage: $SCRIPT -s </path/to/script/files> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>"
   echo "Recognized optional command line arguments:"
   echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z must be used"
-  echo "-n  -- Project name"
+  echo "-m  -- Project name"
   echo "-v  -- Extract VCF files only, no PRS calculation"
   echo "-h  -- Help message"
   echo
@@ -44,7 +44,7 @@ help () {
   echo
   echo "Recognized optional command line arguments:"
   echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z must be used"
-  echo "-n  -- Project name"
+  echo "-m  -- Project name"
   echo "-v  -- Extract VCF files only, no PRS calculation"
   echo "-h  -- Help message"
   echo "------------------------------------------------------------------------------------------------------------------------------------------"
@@ -57,7 +57,7 @@ help () {
   echo "All files to generate scores should be in /path/to/score/files with each score in a separate csv
   file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight."
   echo
-  echo "-n option is for when you want to add your project name to your output file folder and score files (DO NOT INCLUDE ANY SPACES,
+  echo "-m option is for when you want to add your project name to your output file folder and score files (DO NOT INCLUDE ANY SPACES,
   ie. polygenic_scores)."
   echo
   echo "-v option is if you don't want to generate scores, and you just want to exctract a VCF file with
@@ -121,7 +121,7 @@ while [[ $# -gt 0 ]]
       shift # Remove argument name from processing
       shift # Remove argument value from processing
       ;;
-      -n) #set option "n" specifying the project name
+      -m) #set option "n" specifying the project name
       PROJECT_NAME="$2"
       shift # Remove argument name from processing
       shift # Remove argument value from processing
@@ -157,7 +157,7 @@ fi
 
 
 echo "Extracting variants from VCF file."
-source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -n $PROJECT_NAME -f $VCF_FILE_PATH -z $VCF_PATH -s $SCORE_PATH -v $VCF_ONLY || exit 1
+source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -m $PROJECT_NAME -f $VCF_FILE_PATH -z $VCF_PATH -s $SCORE_PATH -v $VCF_ONLY || exit 1
 echo "RUN TIME: $(expr `date +%s` - $START_TIME) seconds"
 if [ $VCF_ONLY -eq 1 ]; then
     echo "END TIME: $(date +"%T")"
