@@ -77,11 +77,9 @@ echo "Polygenic Scores Pipeline: Updated September 24 2020"
 echo "DATE: $DATE"
 echo "START TIME: $(date +"%T")"
 echo "Parsing command line arguments. Here is what your arguments were:"
-for i in "$@"; do
-   echo "$i"
-done
+for var in "$*"; do echo "$var"; done
 
-echo
+echo $NUMARGS
 ### check number of command line arguments
 if [ $NUMARGS -le 6 ]; then
   if [ "$1" == "-h" ]; then
