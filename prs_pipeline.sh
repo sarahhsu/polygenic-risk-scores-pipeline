@@ -77,7 +77,7 @@ echo "Polygenic Scores Pipeline: Updated September 24 2020"
 echo "DATE: $DATE"
 echo "START TIME: $(date +"%T")"
 echo "Parsing command line arguments. Here is what your arguments were:"
-for i; do
+for i in "$@"; do
    echo $i
 done
 
