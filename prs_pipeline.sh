@@ -23,6 +23,7 @@ usage () {
   echo
   echo "Usage: $SCRIPT -s </path/to/script/files> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>"
   echo "Recognized optional command line arguments:"
+  echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z must be used"
   echo "-n  -- Project name"
   echo "-v  -- Extract VCF files only, no PRS calculation"
   echo "-h  -- Help message"
@@ -42,16 +43,16 @@ help () {
   echo "Usage: $SCRIPT -s </path/to/script/files> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>"
   echo
   echo "Recognized optional command line arguments:"
+  echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z must be used"
   echo "-n  -- Project name"
   echo "-v  -- Extract VCF files only, no PRS calculation"
   echo "-h  -- Help message"
   echo "------------------------------------------------------------------------------------------------------------------------------------------"
-  echo "Put all 3 scripts in /path/to/script/files including (1) prs_pipeline_broad_2020-05-21.sh, (2) vcf_pipeline_broad_2020-05-21.sh, (3) prs_2020-03-09.R."
+  echo "Put all 3 scripts in /path/to/script/files including (1) prs_pipeline.sh, (2) vcf_pipeline.sh, (3) prs.R."
   echo
   echo "Make sure you are using FULL ABSOLUTE PATHS!"
   echo
-  echo "All project files should be in /path/to/project/files including a folder called txt_files that has"
-  echo "snps.txt (chr<tab>pos<tab>ref<tab>alt ie.3<tab>137844645<tab>T<tab>C)."
+  echo "All project files should be in /path/to/project/files"
   echo
   echo "All files to generate scores should be in /path/to/score/files with each score in a separate csv
   file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight."
@@ -61,6 +62,7 @@ help () {
   echo
   echo "-v option is if you don't want to generate scores, and you just want to exctract a VCF file with
   all of your listed variants. You must include your variants in a file /path/to/project/files/snps.txt"
+  echo "snps.txt is tab delimited:"
   echo "(chr<tab>pos<tab>ref<tab>alt ie.3<tab>137844645<tab>T<tab>C)"
   echo
   echo "##########################################################################################################################################"
