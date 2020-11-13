@@ -78,7 +78,7 @@ echo "DATE: $DATE"
 echo "START TIME: $(date +"%T")"
 echo "Parsing command line arguments. Here is what your arguments were:"
 for i in "$@"; do
-   echo $i
+   echo "$i"
 done
 
 echo
