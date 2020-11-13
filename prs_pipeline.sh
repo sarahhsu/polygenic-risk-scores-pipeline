@@ -83,7 +83,7 @@ done
 
 echo
 ### check number of command line arguments
-NUMARGS=$#
+echo "$NUMARGS"
 if [ $NUMARGS -le 6 ]; then
   if [ "$1" == "-h" ]; then
   help
@@ -138,7 +138,12 @@ wait
 
 
 if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf" ]]; then
-  echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
+  echo "1:Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
+  exit 1
+fi
+
+if [[ "$VCF_PATH" == "path" && "$VCF_FILE_PATH" == "vcf" ]]; then
+  echo "2:Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f). $VCF_PATH $VCF_FILE_PATH"
   exit 1
 fi
 
