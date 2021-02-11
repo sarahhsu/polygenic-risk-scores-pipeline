@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Updated September 24 2020 - Sarah Hsu
+#Updated November 13 2020 - Sarah Hsu
 
 #Variables
 PROJECT_FOLDER="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"

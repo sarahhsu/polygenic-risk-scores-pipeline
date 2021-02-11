@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Updated September 24 2020 - Sarah Hsu
+#Updated November 13 2020 - Sarah Hsu
 START_TIME=`date +%s`
 # Default values of arguments
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -73,7 +73,7 @@ help () {
   exit 1
 }
 
-echo "Polygenic Scores Pipeline: Updated September 24 2020"
+echo "Polygenic Scores Pipeline: Updated November 13 2020"
 echo "DATE: $DATE"
 echo "START TIME: $(date +"%T")"
 echo "Parsing command line arguments. Here is what your arguments were:"
@@ -89,6 +89,7 @@ if [ "$#" -le 6 ]; then
   fi
   usage 'Not enough command line arguments specified!'
 fi
+
 # Loop through arguments and process them
 # Loop through arguments and process them
 while [[ $# -gt 0 ]]
@@ -153,7 +154,6 @@ fi
 if [ "$PROJECT_NAME" == "project" ]; then
   PROJECT=""
 fi
-
 
 echo "Extracting variants from VCF file."
 source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -m $PROJECT_NAME -f $VCF_FILE_PATH -z $VCF_PATH -s $SCORE_PATH -v $VCF_ONLY || exit 1

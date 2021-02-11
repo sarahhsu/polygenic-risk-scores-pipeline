@@ -10,7 +10,7 @@ library(vcfR)
 
 #Output files:
 ### 1. scores_stats.csv: UNSCALED scores for each person with mean, max, min, stdev added as rows at the bottom
-### 2. scores.csv: UNSCALED scores for each person
+### 2. scores.csv: UNSCALED scores for each person 
 ### 3. scaled_scores.csv: SCALED scores for each person (standardized)
 
 # Variables to be added ---------------------------------------------------
@@ -87,7 +87,7 @@ for (file in cluster_files){
                                 colClasses = c("numeric", "numeric", "character", "character", "character", "character", "numeric"), 
                                 header=TRUE))
   cluster_names <- c(cluster_names, cluster_name)
-  snps <- rbind(snps, get(cluster_name)[,c(1:4)])
+  snps <- rbind(snps, get(cluster_name)[,c("Chr", "Pos", "Ref", "Alt")])
 }
 
 
@@ -99,10 +99,10 @@ for (i in 1:length(vcf_names)){
   assign("vcf_info", as.data.frame(getFIX(get(vcf_names[i]))))
   idx <- c()
   for (j in 1:nrow(vcf_info)){
-    if(length(which(vcf_info[j, "CHROM"] == snps[,1] & 
-                    vcf_info[j, "POS"] == snps[,2] & 
-                    vcf_info[j, "REF"] == snps[,3] & 
-                    vcf_info[j,"ALT"] == snps[,4])) == 0){
+    if(length(which(vcf_info[j, "CHROM"] == snps[,"Chr"] & 
+                    vcf_info[j, "POS"] == snps[,"Pos"] & 
+                    vcf_info[j, "REF"] == snps[,"Ref"] & 
+                    vcf_info[j,"ALT"] == snps[,"Alt"])) == 0){
       idx <- c(idx, j)
     }
   }
