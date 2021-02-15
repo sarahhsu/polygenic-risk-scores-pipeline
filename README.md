@@ -1,8 +1,7 @@
 # Polygenic Risk Score Calculation from VCF Files
-Updated September 24, 2020
+Updated February 15, 2021
 
 **MAKE SURE ALL VARIANT COORDINATES AND REF/ALT ARE CORRECT IN YOUR SCORE FILES!**
-
 
 ## RUNNING THE PIPELINE:
 
@@ -38,8 +37,9 @@ Updated September 24, 2020
     -s -- Path to where the scripts are (should be in the folder named polygenic-risk-scores-pipeline)
     -p -- Path to the main project folder, where the results folders and files will be written to
     -c -- Path to scoring files, typically a subfolder within the project folder
-    -f -- Path to a gzipped VCF file (extension *.vcf.gz), either -f or -z must be used but not both
-    -z -- Path to a folder of gzipped VCF files (extension *.vcf.gz), either -f or -z must be used but not both
+    -f -- Path to a gzipped VCF file (extension *.vcf.gz), only one from -f or -z or -b must be used
+    -z -- Path to a folder of gzipped VCF files (extension *.vcf.gz), only one from -f or -z or -b must be used
+    -b  -- MGB biobank options: broad-eu (build 38), broad-afr (build 38), broad-his (build 38), broad-all (build 38), erisone (build 37), only one from -f or -z or -b must be used
 
 ### Recognized optional command line arguments:
     -m  -- Add project name to the output files (no spaces)
@@ -76,9 +76,11 @@ Updated September 24, 2020
 
 * All 3 scripts should be in /path/to/script/files including (1) prs_pipeline.sh, (2) vcf_pipeline.sh, (3) prs.R
 
-* Make sure you are using **FULL ABSOLUTE PATHS**!
+* Make sure you are using **full absolute paths**!
 
-* All project files should be in /path/to/project/files
+* All project files should be in /path/to/project/files.
+
+* Note that MGB Biobank files are in Build 37 on ErisOne and Build 38 on Broad server.
 
 * All files to generate scores should be in /path/to/score/files with each score in a separate csv file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight
 
