@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Updated November 13 2020 - Sarah Hsu
+#Updated February 15 2021 - Sarah Hsu
 START_TIME=`date +%s`
 # Default values of arguments
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -9,6 +9,7 @@ SCORE_PATH=$SCRIPT_PATH
 VCF_FILE_PATH="vcf"
 VCF_PATH="path"
 VCF_ONLY=0
+VCF_SOURCE="biobank"
 PROJECT_NAME=project
 SCRIPT=`basename ${BASH_SOURCE[0]}`
 DATE=$(date +%F)
@@ -17,18 +18,19 @@ DATE=$(date +%F)
 usage () {
   local l_MSG=$1
   echo
-  echo "##########################################################################################################"
+  echo "######################################################################################################################################"
   echo
   echo "Usage Error: $l_MSG"
   echo
   echo "Usage: $SCRIPT -s </path/to/script/files> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>"
   echo "Recognized optional command line arguments:"
-  echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z must be used"
+  echo "-b  -- MGB biobank options: broad-eu (build 38), broad-afr (build 38), broad-his (build 38), broad-all (build 38), erisone (build 37)"
+  echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z or -b must be used"
   echo "-m  -- Project name"
   echo "-v  -- Extract VCF files only, no PRS calculation"
   echo "-h  -- Help message"
   echo
-  echo "##########################################################################################################"
+  echo "########################################################################################################################################"
   echo
   echo "END TIME: $(date +"%T")."
   echo "RUN TIME: $(expr `date +%s` - $START_TIME) seconds."
@@ -43,16 +45,17 @@ help () {
   echo "Usage: $SCRIPT -s </path/to/script/files> -p </path/to/project/files> -c </path/to/score/files> -f <path/to/vcf/file.vcf.gz>"
   echo
   echo "Recognized optional command line arguments:"
-  echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z must be used"
+  echo "-b  -- MGB biobank options: broad-eu (build 38), broad-afr (build 38), broad-his (build 38), broad-all (build 38), erisone (build 37)"
+  echo "-z  -- /path/to/vcf/files/*.vcf.gz, either -f or -z or -b must be used"
   echo "-m  -- Project name"
   echo "-v  -- Extract VCF files only, no PRS calculation"
   echo "-h  -- Help message"
   echo "------------------------------------------------------------------------------------------------------------------------------------------"
   echo "Put all 3 scripts in /path/to/script/files including (1) prs_pipeline.sh, (2) vcf_pipeline.sh, (3) prs.R."
   echo
-  echo "Make sure you are using FULL ABSOLUTE PATHS!"
+  echo "Make sure you are using absolute paths and that your coordinates match the build of the files you are using!"
   echo
-  echo "All project files should be in /path/to/project/files"
+  echo "All project files should be in /path/to/project/files."
   echo
   echo "All files to generate scores should be in /path/to/score/files with each score in a separate csv
   file with headers Chr, Pos, Ref, Alt, RSID, Effect_Allele, Weight."
@@ -60,7 +63,7 @@ help () {
   echo "-m option is for when you want to add your project name to your output file folder and score files (DO NOT INCLUDE ANY SPACES,
   ie. polygenic_scores)."
   echo
-  echo "-v option is if you don't want to generate scores, and you just want to exctract a VCF file with
+  echo "-v option is if you don't want to generate scores, and you just want to extract a VCF file with
   all of your listed variants. You must include your variants in a file /path/to/project/files/snps.txt"
   echo "snps.txt is tab delimited:"
   echo "(chr<tab>pos<tab>ref<tab>alt ie.3<tab>137844645<tab>T<tab>C)"
@@ -73,7 +76,7 @@ help () {
   exit 1
 }
 
-echo "Polygenic Scores Pipeline: Updated November 13 2020"
+echo "Polygenic Scores Pipeline: Updated February 15 2021"
 echo "DATE: $DATE"
 echo "START TIME: $(date +"%T")"
 echo "Parsing command line arguments. Here is what your arguments were:"
@@ -121,6 +124,11 @@ while [[ $# -gt 0 ]]
       shift # Remove argument name from processing
       shift # Remove argument value from processing
       ;;
+      -b) #set option "b" specifying the MGB Biobank source
+      VCF_SOURCE="$2"
+      shift # Remove argument name from processing
+      shift # Remove argument value from processing
+      ;;
       -m) #set option "n" specifying the project name
       PROJECT_NAME="$2"
       shift # Remove argument name from processing
@@ -136,13 +144,33 @@ done
 wait
 
 
-if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf" ]]; then
+if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf" && "$VCF_SOURCE" != "biobank"]]; then
   echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
   exit 1
 fi
 
-if [[ "$VCF_PATH" == "path" && "$VCF_FILE_PATH" == "vcf" ]]; then
+if [[ "$VCF_PATH" != "path" && "$VCF_FILE_PATH" != "vcf"]]; then
+  echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
+  exit 1
+fi
+
+if [[ "$VCF_PATH" != "path" && "$VCF_SOURCE" != "biobank"]]; then
+  echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
+  exit 1
+fi
+
+if [[ "$VCF_FILE_PATH" != "vcf" && "$VCF_SOURCE" != "biobank"]]; then
+  echo "Please enter path to a folder where the VCF files are (-z) OR a single VCF file (-f)."
+  exit 1
+fi
+
+if [[ "$VCF_PATH" == "path" && "$VCF_FILE_PATH" == "vcf" && "$VCF_SOURCE" == "biobank"]]; then
   echo "Please enter path to a folder where the VCF files are (-z) or a single VCF file (-f)."
+  exit 1
+fi
+
+if [[ "$VCF_SOURCE" != "biobank" && "$VCF_SOURCE" != "broad-all" && "$VCF_SOURCE" != "broad-eu" && "$VCF_SOURCE" != "broad-afr" && "$VCF_SOURCE" != "broad-his" && "$VCF_SOURCE" != "erisone"]]; then
+  echo "Please enter a valid option for MGB biobank: broad-eu (build 38), broad-afr (build 38), broad-his (build 38), broad-all (build 38), erisone (build 37)."
   exit 1
 fi
 
@@ -156,7 +184,7 @@ if [ "$PROJECT_NAME" == "project" ]; then
 fi
 
 echo "Extracting variants from VCF file."
-source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -m $PROJECT_NAME -f $VCF_FILE_PATH -z $VCF_PATH -s $SCORE_PATH -v $VCF_ONLY || exit 1
+source $SCRIPT_PATH/vcf_pipeline.sh -p $PROJECT_PATH -m $PROJECT_NAME -f $VCF_FILE_PATH -z $VCF_PATH -b $VCF_SOURCE -s $SCORE_PATH -v $VCF_ONLY || exit 1
 echo "RUN TIME: $(expr `date +%s` - $START_TIME) seconds"
 if [ $VCF_ONLY -eq 1 ]; then
     echo "END TIME: $(date +"%T")"

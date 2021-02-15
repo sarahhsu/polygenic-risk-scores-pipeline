@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 library(vcfR)
-#Updated September 24 2020 - Sarah Hsu
+#Updated February 15 2021 - Sarah Hsu
 
 # Input and Output Description --------------------------------------------------------
 
@@ -122,6 +122,9 @@ for (i in 1:length(vcf_names)){
     remove <- get(idxs_to_remove[i])
     dosage_info <- dosage_info[-remove,]
     vcf_info <- vcf_info[-remove,]
+  }
+  if(length(grep(":", colnames(dosage_info)))>0){
+    dosage_info <- dosage_info[,grep(":", colnames(dosage_info))]
   }
   cur_weights <- data.frame(matrix(0, nrow = ncol(dosage_info), ncol = length(cluster_names)))
   dimnames(cur_weights) <- list(colnames(dosage_info), cluster_names)
