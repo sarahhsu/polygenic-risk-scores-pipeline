@@ -78,6 +78,7 @@ then
   cd $MERGED_VCF_FOLDER
   for file in $VCF_PATH/*.vcf.gz; do
     filename=$(basename $file .vcf.gz)
+    tabix -p vcf $file
     bcftools view -O v -R $PROJECT_FOLDER/snps.txt $file  | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
   done
 
@@ -97,6 +98,7 @@ else # one file
   cd $FINAL_VCF_FOLDER
   echo
   echo "Extracting SNPS and saving into file $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz"
+  tabix -p vcf $VCF_FILE_PATH
   bcftools view -O v -R $PROJECT_FOLDER/snps.txt $VCF_FILE_PATH  | bcftools annotate --output-type z --output ${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
   cd
 fi
