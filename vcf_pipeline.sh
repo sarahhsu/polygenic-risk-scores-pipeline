@@ -53,7 +53,6 @@ FINAL_VCF_FOLDER=$PROJECT_FOLDER/${PROJECT}final_VCF_${USER}_${DATE}
 RESULTS_FOLDER=$PROJECT_FOLDER/${PROJECT}results_${USER}_${DATE}
 
 echo
-echo "Extracting SNPs from VCF file ."
 if [ ! -f $PROJECT_FOLDER/snps.txt ]; then
     if [ $VCF_ONLY -eq 1 ]; then
       echo "$PROJECT_FOLDER/snps.txt not found! Exiting."
@@ -66,7 +65,7 @@ if [ ! -f $PROJECT_FOLDER/snps.txt ]; then
     mv $PROJECT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
     cut -f 1-4 $PROJECT_FOLDER/temp_snps.txt > $PROJECT_FOLDER/snps.txt
     mv $PROJECT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
-    sort $PROJECT_FOLDER/temp_snps.txt | uniq -u > $PROJECT_FOLDER/snps.txt
+    cat -n $PROJECT_FOLDER/temp_snps.txt  | sort -uk2 | sort -nk1 | cut -f2- > $PROJECT_FOLDER/snps.txt
     rm $PROJECT_FOLDER/temp_snps.txt
 fi
 
