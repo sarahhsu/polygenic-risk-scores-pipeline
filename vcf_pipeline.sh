@@ -69,7 +69,7 @@ if [ ! -f $PROJECT_FOLDER/snps.txt ]; then
     rm $PROJECT_FOLDER/temp_snps.txt
 fi
 
-if [ "$VCF_PATH" == "vcf" ] # folder
+if [ "$VCF_FILE_PATH" == "vcf" ] # folder
 then
   #Extract SNPs from vcf files
   echo
