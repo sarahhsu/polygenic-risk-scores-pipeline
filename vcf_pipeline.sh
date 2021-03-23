@@ -92,6 +92,7 @@ then
   echo
   echo "Merging files saving into file $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz"
   bcftools concat -a $MERGED_VCF_FOLDER/*.recode.vcf.gz -Oz -o $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
+  tabix -p vcf $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
 
   cd
   rm -rf $PROJECT_FOLDER/merged_VCF
