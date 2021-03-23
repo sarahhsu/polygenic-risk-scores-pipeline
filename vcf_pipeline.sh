@@ -95,7 +95,7 @@ then
   tabix -p vcf $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
 
   cd
-  rm -rf $PROJECT_FOLDER/merged_VCF
+  #rm -rf $PROJECT_FOLDER/merged_VCF
 
 else # one file
   mkdir $FINAL_VCF_FOLDER
