@@ -63,9 +63,6 @@ print("Reading in VCF files.")
 vcf_path <- paste0("snps_", username, "_", cur_date, ".recode.vcf.gz$")
 vcf_file_names <- list.files(path=vcf_file_path, pattern=vcf_path, full.names = TRUE)
 
-print(vcf_path)
-print(vcf_file_names)
-
 vcf_names <- c()
 for (i in 1:length(vcf_file_names)) {
   name <- gsub(".vcf.gz", "", vcf_file_names[i])
