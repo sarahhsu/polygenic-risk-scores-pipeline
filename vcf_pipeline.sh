@@ -82,6 +82,7 @@ then
     bgzip temp.vcf
     tabix -p vcf temp.vcf.gz
     bcftools view -O v -R $PROJECT_FOLDER/snps.txt temp.vcf.gz | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
+    tabix -p ${filename}_snps_${USER}_${DATE}.recode.vcf.gz
     rm *temp.vcf.gz*
   done
 
