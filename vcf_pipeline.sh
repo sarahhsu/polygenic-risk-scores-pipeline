@@ -78,10 +78,7 @@ then
   
   
   
-  
-  
-  
-  _FOLDER
+
   cd $MERGED_VCF_FOLDER
   for file in $VCF_PATH/*.vcf.gz; do
     filename=$(basename $file .vcf.gz)
