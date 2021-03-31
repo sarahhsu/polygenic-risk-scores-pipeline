@@ -48,7 +48,7 @@ if [ "$PROJECT" == "project" ]; then
   PROJECT=""
 fi
 
-MERGED_VCF_FOLDER=$PROJECT_FOLDER/merged_VCF
+MERGED_VCF_FOLDER=$PROJECT_FOLDER/${PROJECT}merged_VCF_${USER}_${DATE}
 FINAL_VCF_FOLDER=$PROJECT_FOLDER/${PROJECT}final_VCF_${USER}_${DATE}
 RESULTS_FOLDER=$PROJECT_FOLDER/${PROJECT}results_${USER}_${DATE}
 
@@ -74,7 +74,14 @@ then
   #Extract SNPs from vcf files
   echo
   echo "Extracting SNPs from VCF files"
-  mkdir $MERGED_VCF_FOLDER
+  mkdir $
+  
+  
+  
+  
+  
+  
+  _FOLDER
   cd $MERGED_VCF_FOLDER
   for file in $VCF_PATH/*.vcf.gz; do
     filename=$(basename $file .vcf.gz)
@@ -96,7 +103,7 @@ then
   tabix -p vcf $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
 
   cd
-  #rm -rf $PROJECT_FOLDER/merged_VCF
+  #rm -rf $MERGED_VCF_FOLDER
 
 else # one file
   mkdir $FINAL_VCF_FOLDER
