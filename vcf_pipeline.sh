@@ -74,11 +74,7 @@ then
   #Extract SNPs from vcf files
   echo
   echo "Extracting SNPs from VCF files"
-  mkdir $
-  
-  
-  
-
+  mkdir $MERGED_VCF_FOLDER
   cd $MERGED_VCF_FOLDER
   for file in $VCF_PATH/*.vcf.gz; do
     filename=$(basename $file .vcf.gz)
