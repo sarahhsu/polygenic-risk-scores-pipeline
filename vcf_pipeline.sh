@@ -78,13 +78,13 @@ then
   cd $MERGED_VCF_FOLDER
   for file in $VCF_PATH/*.vcf.gz; do
     filename=$(basename $file .vcf.gz)
-    gunzip -c $file | awk '{gsub(/^chr/,""); print}' > temp.vcf
-    bgzip temp.vcf
-    tabix -p vcf temp.vcf.gz
-    bcftools view -O v -R $PROJECT_FOLDER/snps.txt temp.vcf.gz | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
+    gunzip -c $file | awk '{gsub(/^chr/,""); print}' > temp_${filename}.vcf
+    bgzip temp_${filename}.vcf
+    tabix -p vcf temp_${filename}.vcf.gz
+    bcftools view -O v -R $PROJECT_FOLDER/snps.txt temp_${filename}.vcf.gz | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
     tabix -p vcf ${filename}_snps_${USER}_${DATE}.recode.vcf.gz
-    rm *temp.vcf.gz*
-  done
+    rm *temp_${filename}.vcf.gz* &
+  done 
 
   wait
 
