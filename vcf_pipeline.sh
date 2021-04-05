@@ -54,7 +54,7 @@ if [ "$PROJECT" == "project" ]; then
   PROJECT=""
 fi
 
-MERGED_VCF_FOLDER=$PROJECT_FOLDER/merged_VCF
+MERGED_VCF_FOLDER=$PROJECT_FOLDER/${PROJECT}merged_VCF_${USER}_${DATE}
 FINAL_VCF_FOLDER=$PROJECT_FOLDER/${PROJECT}final_VCF_${USER}_${DATE}
 RESULTS_FOLDER=$PROJECT_FOLDER/${PROJECT}results_${USER}_${DATE}
 
@@ -71,7 +71,7 @@ if [ ! -f $PROJECT_FOLDER/snps.txt ]; then
     mv $PROJECT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
     cut -f 1-4 $PROJECT_FOLDER/temp_snps.txt > $PROJECT_FOLDER/snps.txt
     mv $PROJECT_FOLDER/snps.txt $PROJECT_FOLDER/temp_snps.txt
-    sort $PROJECT_FOLDER/temp_snps.txt | uniq -u > $PROJECT_FOLDER/snps.txt
+    cat -n $PROJECT_FOLDER/temp_snps.txt  | sort -uk2 | sort -nk1 | cut -f2- > $PROJECT_FOLDER/snps.txt
     rm $PROJECT_FOLDER/temp_snps.txt
 fi
 
@@ -88,7 +88,12 @@ then
   cd $MERGED_VCF_FOLDER
   for file in $VCF_PATH/*.vcf.gz; do
     filename=$(basename $file .vcf.gz)
-    bcftools view -O v -R $PROJECT_FOLDER/snps.txt $file  | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
+    gunzip -c $file | awk '{gsub(/^chr/,""); print}' > temp.vcf
+    bgzip temp.vcf
+    tabix -p vcf temp.vcf.gz
+    bcftools view -O v -R $PROJECT_FOLDER/snps.txt temp.vcf.gz | bcftools annotate --output-type z --output ${filename}_snps_${USER}_${DATE}.recode.vcf.gz  -I '%CHROM:%POS:%REF:%ALT'
+    tabix -p vcf ${filename}_snps_${USER}_${DATE}.recode.vcf.gz
+    rm *temp.vcf.gz*
   done
 
   wait
@@ -152,7 +157,7 @@ then
   echo
   echo "Merging files saving into file $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz"
   bcftools concat $MERGED_VCF_FOLDER/*.recode.vcf.gz -Oz -o $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
-
+  tabix -p vcf $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
   cd
   rm -rf $MERGED_VCF_FOLDER
 
@@ -296,6 +301,7 @@ then
   echo
   echo "Merging files saving into file $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz"
   bcftools concat $MERGED_VCF_FOLDER/final*.recode.vcf.gz -Oz -o $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
+  tabix -p vcf $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
 
   cd
   rm -rf $MERGED_VCF_FOLDER
@@ -356,8 +362,8 @@ else
   cd $FINAL_VCF_FOLDER
   echo
   echo "Merging files saving into file $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz"
-  bcftools concat $MERGED_VCF_FOLDER/*.recode.vcf.gz -Oz -o $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
-
+  bcftools concat -a $MERGED_VCF_FOLDER/*.recode.vcf.gz -Oz -o $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
+  tabix -p vcf $FINAL_VCF_FOLDER/${PROJECT}ALL_snps_${USER}_${DATE}.recode.vcf.gz
   cd
   rm -rf $MERGED_VCF_FOLDER
 
