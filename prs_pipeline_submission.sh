@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Make sure you have bcftools, tabix, and R modules loaded!
+# Make sure you have bcftools and R modules loaded!
 
 SCRIPT_PATH=/humgen/diabetes2/users/shsu/prs_project/polygenic-risk-scores-pipeline
 PROJECT_PATH=/humgen/diabetes2/users/shsu/prs_project
