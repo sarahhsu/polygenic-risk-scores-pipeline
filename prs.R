@@ -84,7 +84,8 @@ for (file in cluster_files){
   cluster_name <- gsub(".csv", "", file)
   assign(cluster_name, read.csv(paste(score_path, file, sep="/"), 
                                 colClasses = c("numeric", "numeric", "character", "character", "character", "character", "numeric"), 
-                                header=TRUE))
+                                header=TRUE,
+                                col.names=c("Chr", "Pos", "Ref", "Alt", "RSID", "Effect_Allele", "Weight")))
   cluster_names <- c(cluster_names, cluster_name)
   snps <- rbind(snps, get(cluster_name)[,c("Chr", "Pos", "Ref", "Alt")])
 }
