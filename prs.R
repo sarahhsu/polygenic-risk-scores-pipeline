@@ -54,6 +54,15 @@ convert <- function(r, c, cur_snps, cluster, vcf_info){
   }
 }
 
+convert_to_dosage <- function(df){
+  df[] <- lapply(df, as.character)
+  gt_info[gt_info=="0/0"] <- 0
+  gt_info[gt_info=="0/1"] <- 1
+  gt_info[gt_info=="1/1"] <- 2
+  df[] <- lapply(df, as.numeric)
+  return(df)
+}
+
 # Read in files -----------------------------------------------------------
 
 # GZIPPED VCFs with extracted SNPs
@@ -109,6 +118,7 @@ for (i in 1:length(vcf_names)){
   assign(paste0(vcf_names[i],"_remove"), idx)
   idxs_to_remove <- c(idxs_to_remove, paste0(vcf_names[i],"_remove"))
 }
+
 # Create weights table ----------------------------------------------------
 
 print("Calculating polygenic risk scores.")
@@ -118,6 +128,10 @@ weights <- data.frame(matrix(, nrow = 0, ncol = length(cluster_names) ))
 for (i in 1:length(vcf_names)){
   assign("dosage_info", as.data.frame(extract.gt(get(vcf_names[i]), element='DS')))
   assign("vcf_info", as.data.frame(getFIX(get(vcf_names[i]))))
+  if(all(is.na(dosage_info))){
+    assign("gt_info", as.data.frame(extract.gt(get(vcf_names[i]), element='GT')))
+    dosage_info <- convert_to_dosage(gt_info)
+   }
   if(length(get(idxs_to_remove[i])) > 0) {
     remove <- get(idxs_to_remove[i])
     dosage_info <- dosage_info[-remove,]
