@@ -56,9 +56,9 @@ convert <- function(r, c, cur_snps, cluster, vcf_info){
 
 convert_to_dosage <- function(df){
   df[] <- lapply(df, as.character)
-  gt_info[gt_info=="0/0"] <- 0
-  gt_info[gt_info=="0/1"] <- 1
-  gt_info[gt_info=="1/1"] <- 2
+  df[df=="0/0"] <- 0
+  df[df=="0/1"] <- 1
+  df[df=="1/1"] <- 2
   df[] <- lapply(df, as.numeric)
   return(df)
 }
