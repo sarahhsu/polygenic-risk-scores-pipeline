@@ -78,6 +78,7 @@ then
   cd $MERGED_VCF_FOLDER
   for file in $(find . -name $VCF_PATH/*.vcf.gz); do 
     filename=$(basename $file .vcf.gz)
+    echo "$filename"
     gunzip -c $file | awk '{gsub(/^chr/,""); print}' > temp_${filename}.vcf
     bgzip temp_${filename}.vcf
     tabix -p vcf temp_${filename}.vcf.gz
