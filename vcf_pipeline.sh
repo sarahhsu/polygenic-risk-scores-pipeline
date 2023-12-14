@@ -76,7 +76,7 @@ then
   echo "Extracting SNPs from VCF files"
   mkdir $MERGED_VCF_FOLDER
   cd $MERGED_VCF_FOLDER
-  for file in $(find . -name $VCF_PATH/*.vcf.gz); do 
+  for file in $(find $VCF_PATH . -name *.vcf.gz); do 
     filename=$(basename $file .vcf.gz)
     echo "$filename"
     gunzip -c $file | awk '{gsub(/^chr/,""); print}' > temp_${filename}.vcf
